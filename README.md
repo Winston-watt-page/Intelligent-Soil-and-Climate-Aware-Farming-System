@@ -133,7 +133,7 @@ Implemented using **TensorFlow** and **OpenCV**, the system performs data fusion
 ## Project Structure
 
 ```
-Soil-Type-Classification/
+Soil-Type-Classification - Copy/
 │
 ├── app.py                      # Flask web application (main entry point)
 ├── hybrid_model.py             # Hybrid CNN+LSTM model implementation
@@ -180,20 +180,34 @@ Soil-Type-Classification/
 
 ### Setup Instructions
 
-1. **Clone or Download the Repository**
+1. **Download or Navigate to the Project**
+   ```powershell
+   cd "c:\Users\wattw\Desktop\MainProject\Soil-Type-Classification - Copy"
+   ```
+   Or if cloning from a repository:
    ```bash
+   git clone <repository-url>
    cd Soil-Type-Classification
    ```
 
 2. **Create a Virtual Environment** (Recommended)
-   ```bash
-   python -m venv .venv
-   ```
+   - **Windows**:
+     ```powershell
+     python -m venv .venv
+     ```
+   - **Linux/macOS**:
+     ```bash
+     python3 -m venv .venv
+     ```
 
 3. **Activate the Virtual Environment**
-   - **Windows (PowerShell)**:
+   - **Windows (PowerShell)** - You may need to run PowerShell as Administrator:
      ```powershell
      .\.venv\Scripts\Activate.ps1
+     ```
+     If you get an execution policy error, run:
+     ```powershell
+     Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
      ```
    - **Windows (CMD)**:
      ```cmd
@@ -215,9 +229,14 @@ Soil-Type-Classification/
    - `lstm_soil_model.h5` (Trained LSTM weights)
    
    If missing, train the models using:
-   ```bash
-   python utils/train_hybrid.py
-   ```
+   - **Windows**:
+     ```powershell
+     python utils\train_hybrid.py
+     ```
+   - **Linux/macOS**:
+     ```bash
+     python utils/train_hybrid.py
+     ```
 
 ---
 
@@ -226,9 +245,14 @@ Soil-Type-Classification/
 ### Running the Application
 
 1. **Start the Flask Server**
-   ```bash
-   python app.py
-   ```
+   - **Windows**:
+     ```powershell
+     python app.py
+     ```
+   - **Linux/macOS**:
+     ```bash
+     python3 app.py
+     ```
 
 2. **Access the Application**
    Open your web browser and navigate to:
@@ -361,14 +385,24 @@ A demo API key is included for testing purposes. For production use:
 ## Training the Hybrid Model
 
 ### Generate Training Data
-```bash
-python utils/generate_soil_data.py
-```
+- **Windows**:
+  ```powershell
+  python utils\generate_soil_data.py
+  ```
+- **Linux/macOS**:
+  ```bash
+  python utils/generate_soil_data.py
+  ```
 
 ### Train the Hybrid Model
-```bash
-python utils/train_hybrid.py
-```
+- **Windows**:
+  ```powershell
+  python utils\train_hybrid.py
+  ```
+- **Linux/macOS**:
+  ```bash
+  python utils/train_hybrid.py
+  ```
 
 ### Training Parameters
 - **Epochs**: 50
@@ -466,5 +500,5 @@ If you use this system in your research, please cite:
 ---
 
 **Version**: 1.0.0  
-**Last Updated**: December 26, 2025  
+**Last Updated**: December 28, 2025  
 **Status**: Production Ready ✅
