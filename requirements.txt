@@ -1,0 +1,39 @@
+# ============================================
+# Intelligent Soil and Climate-Aware Farming System
+# Dependencies for CNN+LSTM Hybrid Model
+# ============================================
+
+# Web Framework
+Flask==3.1.2
+Werkzeug==3.1.4
+Jinja2==3.1.6
+itsdangerous==2.2.0
+click==8.3.1
+blinker==1.9.0
+MarkupSafe==3.0.2
+
+# Deep Learning & Machine Learning (TensorFlow for CNN+LSTM)
+tensorflow==2.18.0
+keras==3.7.0
+numpy==2.0.2
+h5py==3.12.1
+scikit-learn==1.6.1
+
+# Image Processing (OpenCV for computer vision)
+opencv-python==4.10.0.84
+Pillow==11.0.0
+
+# Data Processing
+pandas==2.2.3
+
+# Visualization
+matplotlib==3.10.0
+
+# HTTP Requests (for real-time weather API)
+requests==2.32.5
+
+# Date and Time Utilities
+python-dateutil==2.9.0.post0
+
+# Data Serialization
+pickle5==0.0.12; python_version < '3.8'

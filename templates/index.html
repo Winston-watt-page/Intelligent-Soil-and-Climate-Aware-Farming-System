@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Soil & Climate-Aware Farming System | புத்திசாலி மண் மற்றும் காலநிலை அறிவுறுத்தல் விவசாய அமைப்பு</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2d7a3e;
+            --secondary-color: #f39c12;
+            --accent-color: #27ae60;
+            --dark-bg: #1a1a2e;
+            --light-bg: #f8f9fa;
+            --text-dark: #2c3e50;
+            --text-light: #ecf0f1;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', 'Noto Sans Tamil', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-dark);
+            font-family: 'Noto Sans Tamil', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .lang-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .lang-toggle:hover {
+            transform: scale(1.05);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=1600') center/cover;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
+
+        .hero-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content .tamil-title {
+            font-size: 2.5rem;
+            font-family: 'Noto Sans Tamil', sans-serif;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #229954;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title .tamil {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-color);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .feature-card .tamil-text {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #2d7a3e 0%, #27ae60 100%);
+            color: white;
+        }
+
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .upload-area:hover {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area .tamil-text {
+            font-family: 'Noto Sans Tamil', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #imageInput {
+            display: none;
+        }
+
+        #imagePreview {
+            margin-top: 2rem;
+            display: none;
+        }
+
+        #imagePreview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .upload-btn {
+            margin-top: 1.5rem;
+            background: var(--secondary-color);
+            padding: 1rem 3rem;
+            display: none;
+        }
+
+        .upload-btn:hover {
+            background: #e67e22;
+        }
+
+        /* System Info */
+        .system-info {
+            padding: 5rem 2rem;
+            background: var(--light-bg);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .info-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .info-card ul {
+            list-style: none;
+        }
+
+        .info-card ul li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .info-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .social-links a {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Loading Spinner */
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h2 {
+                font-size: 2rem;
+            }
+
+            .hero-content .tamil-title {
+                font-size: 1.8rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .upload-container {
+                padding: 2rem;
+            }
+        }
+
+        /* Language Toggle */
+        .tamil-content {
+            display: none;
+        }
+
+        body.tamil-mode .english-content {
+            display: none;
+        }
+
+        body.tamil-mode .tamil-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <div class="logo-text">
+                    <h1 class="english-content">Smart Farming AI</h1>
+                    <h1 class="tamil-content">புத்திசாலி விவசாய AI</h1>
+                    <p class="english-content">Intelligent Soil & Climate Analysis</p>
+                    <p class="tamil-content">புத்திசாலி மண் மற்றும் காலநிலை பகுப்பாய்வு</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="english-content">Home</a><a href="#home" class="tamil-content">முகப்பு</a></li>
+                <li><a href="#features" class="english-content">Features</a><a href="#features" class="tamil-content">அம்சங்கள்</a></li>
+                <li><a href="#analyze" class="english-content">Analyze</a><a href="#analyze" class="tamil-content">பகுப்பாய்வு</a></li>
+                <li><a href="#about" class="english-content">About</a><a href="#about" class="tamil-content">பற்றி</a></li>
+            </ul>
+            <button class="lang-toggle" onclick="toggleLanguage()">
+                <span class="english-content">தமிழ் | Tamil</span>
+                <span class="tamil-content">English | ஆங்கிலம்</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h2 class="english-content">Intelligent Soil & Climate-Aware Farming System</h2>
+            <h2 class="tamil-content tamil-title">புத்திசாலி மண் மற்றும் காலநிலை அறிவுறுத்தல் விவசாய அமைப்பு</h2>
+            
+            <p class="english-content">
+                Advanced deep learning system for automated soil classification, crop recommendation, 
+                and yield prediction using CNN and LSTM networks with real-time climate data integration.
+            </p>
+            <p class="tamil-content">
+                CNN மற்றும் LSTM நெட்வொர்க்குகளைப் பயன்படுத்தி தானியங்கு மண் வகைப்பாடு, பயிர் பரிந்துரை 
+                மற்றும் விளைச்சல் கணிப்புக்கான மேம்பட்ட ஆழ்ந்த கற்றல் அமைப்பு.
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="#analyze" class="btn btn-primary english-content">Analyze Soil Now</a>
+                <a href="#analyze" class="btn btn-primary tamil-content">இப்போது மண்ணைப் பகுப்பாய்வு செய்யுங்கள்</a>
+                <a href="#features" class="btn btn-secondary english-content">Learn More</a>
+                <a href="#features" class="btn btn-secondary tamil-content">மேலும் அறிக</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english-content">System Capabilities</h2>
+                <h2 class="tamil-content">கணினி திறன்கள்</h2>
+                <p class="tamil english-content">Advanced Agricultural Intelligence</p>
+                <p class="tamil tamil-content">மேம்பட்ட விவசாய புத்திசாலித்தனம்</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="english-content">Soil Classification</h3>
+                    <h3 class="tamil-text tamil-content">மண் வகைப்பாடு</h3>
+                    <p class="english-content">
+                        CNN-based automated soil type identification from images with 93% accuracy. 
+                        Analyzes visual characteristics to classify soil types.
+                    </p>
+                    <p class="tamil-content">
+                        93% துல்லியத்துடன் படங்களிலிருந்து CNN அடிப்படையிலான தானியங்கு மண் வகை அடையாளம். 
+                        மண் வகைகளை வகைப்படுத்த காட்சி பண்புகளை பகுப்பாய்வு செய்கிறது.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3 class="english-content">Climate Analysis</h3>
+                    <h3 class="tamil-text tamil-content">காலநிலை பகுப்பாய்வு</h3>
+                    <p class="english-content">
+                        Real-time weather data integration using API. LSTM networks model temporal patterns 
+                        for accurate predictions.
+                    </p>
+                    <p class="tamil-content">
+                        API ஐப் பயன்படுத்தி நிகழ்நேர வானிலை தரவு ஒருங்கிணைப்பு. துல்லியமான கணிப்புகளுக்காக 
+                        LSTM நெட்வொர்க்குகள் தற்காலிக வடிவங்களை மாதிரியாக்குகின்றன.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3 class="english-content">Crop Recommendation</h3>
+                    <h3 class="tamil-text tamil-content">பயிர் பரிந்துரை</h3>
+                    <p class="english-content">
+                        Intelligent crop suggestions based on soil type and climate conditions. 
+                        Optimizes agricultural planning.
+                    </p>
+                    <p class="tamil-content">
+                        மண் வகை மற்றும் காலநிலை நிலைமைகளின் அடிப்படையில் புத்திசாலி பயிர் பரிந்துரைகள். 
+                        விவசாய திட்டமிடலை உகந்ததாக்குகிறது.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="english-content">Yield Prediction</h3>
+                    <h3 class="tamil-text tamil-content">விளைச்சல் கணிப்பு</h3>
+                    <p class="english-content">
+                        Multimodal data fusion for accurate yield estimation. Combines visual and 
+                        environmental features.
+                    </p>
+                    <p class="tamil-content">
+                        துல்லியமான விளைச்சல் மதிப்பீட்டிற்கான மல்டிமோடல் தரவு இணைப்பு. காட்சி மற்றும் 
+                        சுற்றுச்சூழல் அம்சங்களை ஒருங்கிணைக்கிறது.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="english-content">Deep Learning</h3>
+                    <h3 class="tamil-text tamil-content">ஆழ்ந்த கற்றல்</h3>
+                    <p class="english-content">
+                        TensorFlow-powered neural networks for complex pattern recognition. 
+                        Continuous learning and adaptation.
+                    </p>
+                    <p class="tamil-content">
+                        சிக்கலான வடிவ அங்கீகாரத்திற்கான TensorFlow-இயங்கும் நரம்பு வலைகள். 
+                        தொடர்ச்சியான கற்றல் மற்றும் தழுவல்.
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="english-content">Real-time Processing</h3>
+                    <h3 class="tamil-text tamil-content">நிகழ்நேர செயலாக்கம்</h3>
+                    <p class="english-content">
+                        Instant analysis and recommendations. OpenCV-based image processing 
+                        for quick results.
+                    </p>
+                    <p class="tamil-content">
+                        உடனடி பகுப்பாய்வு மற்றும் பரிந்துரைகள். விரைவான முடிவுகளுக்கு 
+                        OpenCV அடிப்படையிலான பட செயலாக்கம்.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section" id="analyze">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english-content" style="color: white;">Analyze Your Soil</h2>
+                <h2 class="tamil-content" style="color: white;">உங்கள் மண்ணை பகுப்பாய்வு செய்யுங்கள்</h2>
+            </div>
+
+            <div class="upload-container">
+                <form id="uploadForm" method="POST" action="/predict" enctype="multipart/form-data">
+                    <div class="upload-area" id="uploadArea">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h3 class="english-content">Upload Soil Image</h3>
+                        <h3 class="tamil-content tamil-text">மண் படத்தைப் பதிவேற்றவும்</h3>
+                        <p class="english-content">Click to select or drag and drop your image</p>
+                        <p class="tamil-content">உங்கள் படத்தைத் தேர்ந்தெடுக்க அல்லது இழுத்து விடுவதற்கு கிளிக் செய்யவும்</p>
+                        <input type="file" id="imageInput" name="image" accept="image/*" required>
+                    </div>
+
+                    <div id="imagePreview">
+                        <img id="preview" src="" alt="Preview">
+                    </div>
+
+                    <!-- Temporal Features Toggle (NEW - Hybrid LSTM Feature) -->
+                    <div style="margin: 2rem 0; text-align: center;">
+                        <label style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; cursor: pointer; font-size: 1.1rem;">
+                            <input type="checkbox" id="temporalToggle" style="width: 20px; height: 20px; cursor: pointer;">
+                            <span class="english-content" style="font-weight: 600;">
+                                <i class="fas fa-brain"></i> Use Hybrid Model (CNN + LSTM with Temporal Features)
+                            </span>
+                            <span class="tamil-content" style="font-weight: 600;">
+                                <i class="fas fa-brain"></i> கலப்பின மாதிரியைப் பயன்படுத்தவும் (CNN + LSTM)
+                            </span>
+                        </label>
+                        <p style="color: #ffd700; margin-top: 0.75rem; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="english-content"> Standard soil values will be automatically applied based on the detected soil type from your image</span>
+                            <span class="tamil-content"> உங்கள் படத்தில் இருந்து கண்டறியப்பட்ட மண் வகையின் அடிப்படையில் நிலையான மண் மதிப்புகள் தானாகவே பயன்படுத்தப்படும்</span>
+                        </p>
+                    </div>
+
+                    <!-- City Selection for Weather -->
+                    <div style="margin: 1.5rem 0;">
+                        <label style="color: white; font-weight: 600; display: block; margin-bottom: 0.5rem;">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="english-content"> Select Your Location</span>
+                            <span class="tamil-content"> உங்கள் இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்</span>
+                        </label>
+                        <div style="display: flex; gap: 0.5rem; align-items: stretch; flex-wrap: nowrap;">
+                            <select name="city" id="citySelect" style="flex: 1; min-width: 200px; padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                                <option value="auto" selected>🌍 Auto-Detect Location / தானாக கண்டறி</option>
+                                
+                                <!-- CHENNAI DISTRICT -->
+                                <optgroup label="📍 Chennai District / சென்னை மாவட்டம்">
+                                    <option value="Chennai">  Chennai / சென்னை</option>
+                                    <option value="Tambaram">  Tambaram / தாம்பரம்</option>
+                                    <option value="Pallavaram">  Pallavaram / பல்லாவரம்</option>
+                                </optgroup>
+                                
+                                <!-- TRICHY DISTRICT -->
+                                <optgroup label="📍 Tiruchirappalli District / திருச்சி மாவட்டம்">
+                                    <option value="Tiruchirappalli">  Tiruchirappalli (Trichy) / திருச்சிராப்பள்ளி</option>
+                                    <option value="Thottiyam">  Thottiyam / தொட்டியம்</option>
+                                    <option value="Lalgudi">  Lalgudi / லால்குடி</option>
+                                    <option value="Musiri">  Musiri / முசிறி</option>
+                                    <option value="Srirangam">  Srirangam / ஸ்ரீரங்கம்</option>
+                                    <option value="Manachanallur">  Manachanallur / மணக்கநல்லூர்</option>
+                                    <option value="Manapparai">  Manapparai / மணப்பாறை</option>
+                                    <option value="Thuvarankurichi">  Thuvarankurichi / துவரங்குறிச்சி</option>
+                                </optgroup>
+                                
+                                <!-- NAMAKKAL DISTRICT -->
+                                <optgroup label="📍 Namakkal District / நாமக்கல் மாவட்டம்">
+                                    <option value="Namakkal">  Namakkal (Main City) / நாமக்கல்</option>
+                                    <option value="Mohanur">  Mohanur / மோகனூர்</option>
+                                    <option value="Rasipuram">  Rasipuram / இராசிபுரம்</option>
+                                    <option value="Tiruchengode">  Tiruchengode / திருச்செங்கோடு</option>
+                                    <option value="Paramathi Velur">  Paramathi Velur / பரமத்தி வேலூர்</option>
+                                    <option value="Kolli Hills">  Kolli Hills / கொல்லிமலை</option>
+                                </optgroup>
+                                
+                                <!-- COIMBATORE DISTRICT -->
+                                <optgroup label="📍 Coimbatore District / கோவை மாவட்டம்">
+                                    <option value="Coimbatore">  Coimbatore (Main City) / கோயம்புத்தூர்</option>
+                                    <option value="Pollachi">  Pollachi / பொள்ளாச்சி</option>
+                                    <option value="Mettupalayam">  Mettupalayam / மேட்டுப்பாளையம்</option>
+                                    <option value="Valparai">  Valparai / வால்பாறை</option>
+                                </optgroup>
+                                
+                                <!-- SALEM DISTRICT -->
+                                <optgroup label="📍 Salem District / சேலம் மாவட்டம்">
+                                    <option value="Salem">  Salem (Main City) / சேலம்</option>
+                                    <option value="Attur">  Attur / ஆத்தூர்</option>
+                                    <option value="Mettur">  Mettur / மேட்டூர்</option>
+                                    <option value="Omalur">  Omalur / ஓமலூர்</option>
+                                </optgroup>
+                                
+                                <!-- ERODE DISTRICT -->
+                                <optgroup label="📍 Erode District / ஈரோடு மாவட்டம்">
+                                    <option value="Erode">  Erode (Main City) / ஈரோடு</option>
+                                    <option value="Gobichettipalayam">  Gobichettipalayam / கோபிசெட்டிபாளையம்</option>
+                                    <option value="Bhavani">  Bhavani / பவானி</option>
+                                    <option value="Perundurai">  Perundurai / பெருந்துறை</option>
+                                </optgroup>
+                                
+                                <!-- MADURAI DISTRICT -->
+                                <optgroup label="📍 Madurai District / மதுரை மாவட்டம்">
+                                    <option value="Madurai">  Madurai (Main City) / மதுரை</option>
+                                    <option value="Melur">  Melur / மேலூர்</option>
+                                    <option value="Usilampatti">  Usilampatti / உசிலம்பட்டி</option>
+                                    <option value="Vadipatti">  Vadipatti / வாடிப்பட்டி</option>
+                                </optgroup>
+                                
+                                <!-- THANJAVUR DISTRICT -->
+                                <optgroup label="📍 Thanjavur District / தஞ்சாவூர் மாவட்டம்">
+                                    <option value="Thanjavur">  Thanjavur (Main City) / தஞ்சாவூர்</option>
+                                    <option value="Kumbakonam">  Kumbakonam / கும்பகோணம்</option>
+                                    <option value="Pattukkottai">  Pattukkottai / பட்டுக்கோட்டை</option>
+                                    <option value="Thiruvidaimarudur">  Thiruvidaimarudur / திருவிடைமருதூர்</option>
+                                </optgroup>
+                                
+                                <!-- OTHER MAJOR DISTRICTS -->
+                                <optgroup label="📍 Other Districts / பிற மாவட்டங்கள்">
+                                    <option value="Tiruppur">Tiruppur / திருப்பூர்</option>
+                                    <option value="Nilgiris">Nilgiris (Ooty) / நீலகிரி</option>
+                                    <option value="Dindigul">Dindigul / திண்டுக்கல்</option>
+                                    <option value="Theni">Theni / தேனி</option>
+                                    <option value="Virudhunagar">Virudhunagar / விருதுநகர்</option>
+                                    <option value="Sivaganga">Sivaganga / சிவகங்கை</option>
+                                    <option value="Ramanathapuram">Ramanathapuram / இராமநாதபுரம்</option>
+                                    <option value="Tiruvarur">Tiruvarur / திருவாரூர்</option>
+                                    <option value="Nagapattinam">Nagapattinam / நாகப்பட்டினம்</option>
+                                    <option value="Pudukkottai">Pudukkottai / புதுக்கோட்டை</option>
+                                    <option value="Ariyalur">Ariyalur / அரியலூர்</option>
+                                    <option value="Dharmapuri">Dharmapuri / தர்மபுரி</option>
+                                    <option value="Krishnagiri">Krishnagiri / கிருஷ்ணகிரி</option>
+                                    <option value="Vellore">Vellore / வேலூர்</option>
+                                    <option value="Tiruvannamalai">Tiruvannamalai / திருவண்ணாமலை</option>
+                                    <option value="Ranipet">Ranipet / ராணிப்பேட்டை</option>
+                                    <option value="Tirupattur">Tirupattur / திருப்பத்தூர்</option>
+                                    <option value="Cuddalore">Cuddalore / கடலூர்</option>
+                                    <option value="Villupuram">Villupuram / விழுப்புரம்</option>
+                                    <option value="Kallakurichi">Kallakurichi / கள்ளக்குறிச்சி</option>
+                                    <option value="Kanchipuram">Kanchipuram / காஞ்சிபுரம்</option>
+                                    <option value="Chengalpattu">Chengalpattu / செங்கல்பட்டு</option>
+                                    <option value="Tirunelveli">Tirunelveli / திருநெல்வேலி</option>
+                                    <option value="Thoothukudi">Thoothukudi / தூத்துக்குடி</option>
+                                    <option value="Tenkasi">Tenkasi / தென்காசி</option>
+                                    <option value="Kanniyakumari">Kanniyakumari / கன்னியாகுமரி</option>
+                                    <option value="Karur">Karur / கரூர்</option>
+                                    <option value="Perambalur">Perambalur / பெரம்பலூர்</option>
+                                </optgroup>
+                                
+                                <option value="manual">✏️ Enter Coordinates Manually / கைமுறையாக உள்ளிடவும்</option>
+                            </select>
+                            <button type="button" id="detectLocationBtn" 
+                                    style="padding: 0.75rem 1.5rem; background: #27ae60; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; white-space: nowrap; transition: all 0.3s; position: relative; z-index: 10; flex-shrink: 0;">
+                                <i class="fas fa-crosshairs"></i> Detect
+                            </button>
+                        </div>
+                        
+                        <!-- Manual Coordinate Input -->
+                        <div id="manualCoordinates" style="display: none; margin-top: 1rem; background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px; backdrop-filter: blur(10px);">
+                            <div style="margin-bottom: 1rem; padding: 0.5rem; background: rgba(52, 152, 219, 0.2); border-radius: 5px;">
+                                <p style="color: #fff; font-size: 0.85rem; margin: 0;">
+                                    <i class="fas fa-info-circle"></i> <strong class="english-content">Enter GPS Coordinates</strong><strong class="tamil-content">GPS ஆயத்தொலைவுகளை உள்ளிடவும்</strong>
+                                    <br>
+                                    <span class="english-content">Range: Latitude (-90 to 90), Longitude (-180 to 180)</span>
+                                    <span class="tamil-content">வரம்பு: அட்சரேகை (-90 முதல் 90), தீர்க்கரேகை (-180 முதல் 180)</span>
+                                </p>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                <div>
+                                    <label style="color: white; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                        <i class="fas fa-map-marker-alt"></i> <span class="english-content">Latitude / அட்சரேகை</span>
+                                    </label>
+                                    <input type="number" id="manualLat" step="0.0001" placeholder="e.g., 13.0827 (Chennai)" min="-90" max="90"
+                                           style="width: 100%; padding: 0.75rem; border-radius: 5px; border: 2px solid #3498db; font-size: 1rem;">
+                                </div>
+                                <div>
+                                    <label style="color: white; display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">
+                                        <i class="fas fa-map-marker-alt"></i> <span class="english-content">Longitude / தீர்க்கரேகை</span>
+                                    </label>
+                                    <input type="number" id="manualLon" step="0.0001" placeholder="e.g., 80.2707 (Chennai)" min="-180" max="180"
+                                           style="width: 100%; padding: 0.75rem; border-radius: 5px; border: 2px solid #3498db; font-size: 1rem;">
+                                </div>
+                            </div>
+                            <button type="button" id="applyManualCoords"
+                                    style="margin-top: 1rem; width: 100%; padding: 0.75rem; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: all 0.3s;"
+                                    onmouseover="this.style.background='#2980b9'" onmouseout="this.style.background='#3498db'">
+                                <i class="fas fa-check"></i> <span class="english-content">Apply Coordinates</span><span class="tamil-content">ஆயத்தொலைவுகளைப் பயன்படுத்து</span>
+                            </button>
+                        </div>
+                        
+                        <div id="locationInfo" style="color: #ffd700; margin-top: 0.5rem; font-size: 0.9rem; display: none;">
+                            <i class="fas fa-spinner fa-spin" id="locationSpinner" style="display: none;"></i>
+                            <i class="fas fa-check-circle" id="locationSuccess" style="display: none;"></i>
+                            <i class="fas fa-exclamation-triangle" id="locationWarning" style="display: none; color: #ff9800;"></i>
+                            <span id="locationText"></span>
+                        </div>
+                        <p style="color: #ffd700; margin-top: 0.5rem; font-size: 0.9rem; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 5px;">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="english-content"><strong>3 Ways to Set Location:</strong><br>
+                            1️⃣ Click "Detect" for GPS (browser asks permission)<br>
+                            2️⃣ Select a city from dropdown<br>
+                            3️⃣ Choose "Enter Coordinates Manually" for custom location</span>
+                            <span class="tamil-content"><strong>இருப்பிடத்தை அமைக்க 3 வழிகள்:</strong><br>
+                            1️⃣ GPS க்கு "Detect" கிளிக் செய்க (உலாவி அனுமதி கேட்கும்)<br>
+                            2️⃣ கீழ் பட்டியலில் இருந்து நகரத்தைத் தேர்ந்தெடுக்கவும்<br>
+                            3️⃣ தனிப்பயன் இருப்பிடத்திற்கு "கைமுறையாக உள்ளிடவும்" தேர்வு செய்க</span>
+                        </p>
+                    </div>
+
+                    <!-- Temporal Features Input (Hidden by default) -->
+                    <div id="temporalFeatures" style="display: none; background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; backdrop-filter: blur(10px);">
+                        <input type="hidden" name="use_temporal" id="useTemporal" value="false">
+                        
+                        <h4 style="color: white; margin-bottom: 1.5rem; text-align: center;">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="english-content"> Soil Characteristics (Optional)</span>
+                            <span class="tamil-content"> மண் பண்புகள் (விருப்பமானது)</span>
+                        </h4>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-tint"></i> 
+                                    <span class="english-content">Moisture (0-1)</span>
+                                    <span class="tamil-content">ஈரப்பதம் (0-1)</span>
+                                </label>
+                                <input type="number" id="inputMoisture" name="moisture" min="0" max="1" step="0.01" value="0.6" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-thermometer-half"></i> 
+                                    <span class="english-content">Temperature (°C)</span>
+                                    <span class="tamil-content">வெப்பநிலை (°C)</span>
+                                </label>
+                                <input type="number" id="inputTemperature" name="temperature" min="0" max="50" step="0.1" value="25" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-flask"></i> 
+                                    <span class="english-content">pH Level</span>
+                                    <span class="tamil-content">pH அளவு</span>
+                                </label>
+                                <input type="number" id="inputPH" name="pH" min="0" max="14" step="0.1" value="6.8" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-atom"></i> 
+                                    <span class="english-content">Nitrogen (0-1)</span>
+                                    <span class="tamil-content">நைட்ரஜன் (0-1)</span>
+                                </label>
+                                <input type="number" id="inputNitrogen" name="nitrogen" min="0" max="1" step="0.01" value="0.6" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-atom"></i> 
+                                    <span class="english-content">Phosphorus (0-1)</span>
+                                    <span class="tamil-content">பாஸ்பரஸ் (0-1)</span>
+                                </label>
+                                <input type="number" id="inputPhosphorus" name="phosphorus" min="0" max="1" step="0.01" value="0.55" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-atom"></i> 
+                                    <span class="english-content">Potassium (0-1)</span>
+                                    <span class="tamil-content">பொட்டாசியம் (0-1)</span>
+                                </label>
+                                <input type="number" id="inputPotassium" name="potassium" min="0" max="1" step="0.01" value="0.6" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                            
+                            <div style="display: flex; flex-direction: column;">
+                                <label style="color: white; margin-bottom: 0.5rem; font-weight: 500;">
+                                    <i class="fas fa-leaf"></i> 
+                                    <span class="english-content">Organic Matter (0-1)</span>
+                                    <span class="tamil-content">கரிம பொருள் (0-1)</span>
+                                </label>
+                                <input type="number" id="inputOrganicMatter" name="organic_matter" min="0" max="1" step="0.01" value="0.6" 
+                                       style="padding: 0.75rem; border-radius: 8px; border: 2px solid #ddd; font-size: 1rem;">
+                            </div>
+                        </div>
+                        
+                        <p style="color: #ffd700; margin-top: 1rem; text-align: center; font-size: 0.9rem;">
+                            <i class="fas fa-info-circle"></i>
+                            <span class="english-content"> You can manually adjust these values if you have specific soil test data, or leave them as default - the system will use standard values based on your soil classification.</span>
+                            <span class="tamil-content"> குறிப்பிட்ட மண் சோதனை தரவு இருந்தால் இந்த மதிப்புகளை கைமுறையாக சரிசெய்யலாம், அல்லது இயல்புநிலையாக விடலாம் - அமைப்பு உங்கள் மண் வகைப்பாட்டின் அடிப்படையில் நிலையான மதிப்புகளைப் பயன்படுத்தும்.</span>
+                        </p>
+                        <div style="margin-top: 1rem; padding: 0.75rem; background: rgba(52, 152, 219, 0.2); border-radius: 8px; border-left: 4px solid #3498db;">
+                            <p style="color: #fff; font-size: 0.85rem; margin: 0;">
+                                <i class="fas fa-lightbulb"></i> <strong class="english-content">How it works:</strong><strong class="tamil-content">இது எவ்வாறு செயல்படுகிறது:</strong>
+                                <br>
+                                <span class="english-content">1. Your image is analyzed to detect soil type<br>2. Standard NPK values for that soil type are automatically applied<br>3. Hybrid CNN+LSTM model provides enhanced predictions</span>
+                                <span class="tamil-content">1. மண் வகையைக் கண்டறிய உங்கள் படம் பகுப்பாய்வு செய்யப்படுகிறது<br>2. அந்த மண் வகைக்கான நிலையான NPK மதிப்புகள் தானாகவே பயன்படுத்தப்படுகின்றன<br>3. கலப்பின CNN+LSTM மாதிரி மேம்பட்ட கணிப்புகளை வழங்குகிறது</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary upload-btn" id="analyzeBtn">
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="english-content">Analyze Soil</span>
+                        <span class="tamil-content">மண்ணை பகுப்பாய்வு செய்யுங்கள்</span>
+                    </button>
+
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p class="english-content">Analyzing soil characteristics...</p>
+                        <p class="tamil-content">மண் பண்புகளை பகுப்பாய்வு செய்கிறது...</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Info Section -->
+    <section class="system-info">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="english-content">Technology Stack</h2>
+                <h2 class="tamil-content">தொழில்நுட்ப அடுக்கு</h2>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4 class="english-content">Deep Learning Models</h4>
+                    <h4 class="tamil-content">ஆழ்ந்த கற்றல் மாதிரிகள்</h4>
+                    <ul>
+                        <li>Convolutional Neural Network (CNN)</li>
+                        <li>Long Short-Term Memory (LSTM)</li>
+                        <li>TensorFlow Framework</li>
+                        <li>Image Classification - 93% Accuracy</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h4 class="english-content">Data Sources</h4>
+                    <h4 class="tamil-content">தரவு ஆதாரங்கள்</h4>
+                    <ul>
+                        <li>Real-time Weather API</li>
+                        <li>Soil Image Database</li>
+                        <li>Climate Parameters</li>
+                        <li>Historical Agricultural Data</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h4 class="english-content">Supported Soil Types</h4>
+                    <h4 class="tamil-content">ஆதரவு மண் வகைகள்</h4>
+                    <ul>
+                        <li>Alluvial Soil - வண்டல் மண்</li>
+                        <li>Black Soil - கருப்பு மண்</li>
+                        <li>Clay Soil - களிமண்</li>
+                        <li>Red Soil - சிவப்பு மண்</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3 class="english-content">Intelligent Farming System</h3>
+            <h3 class="tamil-content">புத்திசாலி விவசாய அமைப்பு</h3>
+            <p class="english-content">
+                Empowering farmers with AI-driven agricultural insights for sustainable and productive farming.
+            </p>
+            <p class="tamil-content">
+                நிலையான மற்றும் உற்பத்தி விவசாயத்திற்கான AI-உந்துதல் விவசாய நுண்ணறிவுகளுடன் விவசாயிகளை மேம்படுத்துதல்.
+            </p>
+
+            <div class="social-links">
+                <a href="https://github.com/Winston-watt-page" target="_blank" title="GitHub" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/winstonwatt/" target="_blank" title="LinkedIn" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="mailto:wattwinston7@gmail.com" title="Email" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+
+            <p>&copy; 2025 Intelligent Farming System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle
+        function toggleLanguage() {
+            document.body.classList.toggle('tamil-mode');
+            localStorage.setItem('language', document.body.classList.contains('tamil-mode') ? 'tamil' : 'english');
+        }
+
+        // Load saved language preference and auto-detect location
+        window.addEventListener('load', async () => {
+            const savedLang = localStorage.getItem('language');
+            if (savedLang === 'tamil') {
+                document.body.classList.add('tamil-mode');
+            }
+            
+            // Auto-detect location on page load using IP-based detection (no permission needed)
+            if (citySelect.value === 'auto') {
+                await autoDetectLocation();
+            }
+        });
+
+        // Upload area click handler
+        const uploadArea = document.getElementById('uploadArea');
+        const imageInput = document.getElementById('imageInput');
+        
+        uploadArea.addEventListener('click', function(e) {
+            // Prevent click if it's on the button
+            if (!e.target.closest('button')) {
+                imageInput.click();
+            }
+        });
+
+        // Image Upload Preview
+        const imagePreview = document.getElementById('imagePreview');
+        const preview = document.getElementById('preview');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+
+        imageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                    analyzeBtn.style.display = 'inline-block';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Temporal Features Toggle (NEW)
+        const temporalToggle = document.getElementById('temporalToggle');
+        const temporalFeatures = document.getElementById('temporalFeatures');
+        const useTemporal = document.getElementById('useTemporal');
+
+        temporalToggle.addEventListener('change', function() {
+            if (this.checked) {
+                temporalFeatures.style.display = 'block';
+                useTemporal.value = 'true';
+            } else {
+                temporalFeatures.style.display = 'none';
+                useTemporal.value = 'false';
+            }
+        });
+
+        // Form Submission
+        const uploadForm = document.getElementById('uploadForm');
+        const loading = document.getElementById('loading');
+
+        uploadForm.addEventListener('submit', function(e) {
+            // Don't prevent default - let form submit normally
+            loading.style.display = 'block';
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = 'Processing...';
+        });
+
+        // Location Detection (NEW)
+        const detectLocationBtn = document.getElementById('detectLocationBtn');
+        const citySelect = document.getElementById('citySelect');
+        const locationInfo = document.getElementById('locationInfo');
+        const locationText = document.getElementById('locationText');
+        const locationSpinner = document.getElementById('locationSpinner');
+        const locationSuccess = document.getElementById('locationSuccess');
+        const locationWarning = document.getElementById('locationWarning');
+        const manualCoordinates = document.getElementById('manualCoordinates');
+        const manualLat = document.getElementById('manualLat');
+        const manualLon = document.getElementById('manualLon');
+        const applyManualCoords = document.getElementById('applyManualCoords');
+
+        // Show/hide manual coordinates input
+        citySelect.addEventListener('change', function() {
+            if (this.value === 'manual') {
+                manualCoordinates.style.display = 'block';
+            } else {
+                manualCoordinates.style.display = 'none';
+            }
+        });
+
+        // Apply manual coordinates
+        applyManualCoords.addEventListener('click', async function() {
+            const lat = parseFloat(manualLat.value);
+            const lon = parseFloat(manualLon.value);
+            
+            if (isNaN(lat) || isNaN(lon)) {
+                showLocationFeedback('warning', '⚠️ Please enter valid numbers for both latitude and longitude');
+                return;
+            }
+            
+            if (lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+                showLocationFeedback('warning', '⚠️ Invalid coordinates range. Latitude: -90 to 90, Longitude: -180 to 180');
+                return;
+            }
+            
+            showLocationFeedback('spinner', '🌍 Converting coordinates to location...');
+            
+            try {
+                const response = await fetch('/api/reverse-geocode', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ latitude: lat, longitude: lon })
+                });
+                
+                const location = await response.json();
+                
+                if (location.error) {
+                    throw new Error(location.error);
+                }
+                
+                displayLocation(location, 'manual');
+            } catch (error) {
+                showLocationFeedback('warning', `Failed: ${error.message}`);
+                setTimeout(() => locationInfo.style.display = 'none', 3000);
+            }
+        });
+
+        // Auto IP-based detection function (no permission needed)
+        async function autoDetectLocation() {
+            try {
+                showLocationFeedback('spinner', '🌐 Auto-detecting your location via IP address...');
+                
+                const response = await fetch('/api/get-location');
+                const location = await response.json();
+                
+                if (location.error) {
+                    throw new Error(location.error);
+                }
+                
+                console.log('✓ IP-based location:', location);
+                displayLocation(location, 'ip-auto');
+                
+                if (location.source === 'default') {
+                    showLocationFeedback('warning', '⚠️ Using default location (Chennai). Click "Detect" for GPS or select your city manually.');
+                } else {
+                    showLocationFeedback('success', `✅ Location detected: ${location.city}, ${location.region}`);
+                }
+                
+            } catch (error) {
+                console.error('Auto-detection failed:', error);
+                showLocationFeedback('warning', '⚠️ Auto-detection unavailable. Click "Detect" for GPS or select your city manually.');
+            }
+        }
+        
+        function showLocationFeedback(type, message) {
+            locationInfo.style.display = 'block';
+            locationSpinner.style.display = 'none';
+            locationSuccess.style.display = 'none';
+            locationWarning.style.display = 'none';
+            
+            if (type === 'spinner') {
+                locationSpinner.style.display = 'inline';
+            } else if (type === 'success') {
+                locationSuccess.style.display = 'inline';
+            } else if (type === 'warning') {
+                locationWarning.style.display = 'inline';
+            }
+            
+            locationText.textContent = message;
+        }
+        
+        function displayLocation(location, source) {
+            const sourceIcon = source === 'browser-gps' ? '📍' : source === 'manual' ? '✏️' : '🌐';
+            const sourceName = source === 'browser-gps' ? 'GPS-Based' : source === 'manual' ? 'Manual Entry' : 'Auto-Detected';
+            
+            // Show more detailed location info
+            const accuracy = location.accuracy ? ` (±${Math.round(location.accuracy)}m)` : '';
+            
+            showLocationFeedback('success', 
+                `${sourceIcon} ${location.city}, ${location.region}${accuracy} • Lat: ${location.latitude.toFixed(4)}, Lon: ${location.longitude.toFixed(4)} • ${sourceName}`
+            );
+            
+            // Update hidden inputs for form submission
+            let latInput = document.getElementById('detectedLat');
+            let lonInput = document.getElementById('detectedLon');
+            
+            if (!latInput) {
+                latInput = document.createElement('input');
+                latInput.type = 'hidden';
+                latInput.id = 'detectedLat';
+                latInput.name = 'detected_lat';
+                uploadForm.appendChild(latInput);
+            }
+            
+            if (!lonInput) {
+                lonInput = document.createElement('input');
+                lonInput.type = 'hidden';
+                lonInput.id = 'detectedLon';
+                lonInput.name = 'detected_lon';
+                uploadForm.appendChild(lonInput);
+            }
+            
+            latInput.value = location.latitude;
+            lonInput.value = location.longitude;
+            
+            // Update city select to auto
+            citySelect.value = 'auto';
+        }
+
+        async function detectLocation() {
+            // Check if browser supports geolocation
+            if (!navigator.geolocation) {
+                showLocationFeedback('warning', '❌ Geolocation is not supported by your browser. Please select a city or enter coordinates manually.');
+                citySelect.value = 'manual';
+                manualCoordinates.style.display = 'block';
+                return;
+            }
+            
+            try {
+                detectLocationBtn.disabled = true;
+                detectLocationBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Detecting...';
+                showLocationFeedback('spinner', '📍 Requesting GPS permission from browser... (This may take up to 60 seconds)');
+                
+                // Get GPS coordinates from browser with longer timeout
+                const position = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        timeout: 60000,  // 60 seconds for slow GPS
+                        enableHighAccuracy: true,
+                        maximumAge: 0
+                    });
+                });
+                
+                console.log('✓ GPS Position:', position.coords.latitude, position.coords.longitude);
+                showLocationFeedback('spinner', '🌍 GPS acquired! Converting coordinates to location name...');
+                
+                // Convert coordinates to location name
+                const geocodeResponse = await fetch('/api/reverse-geocode', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    })
+                });
+                
+                const location = await geocodeResponse.json();
+                
+                // Add accuracy information from GPS
+                location.accuracy = position.coords.accuracy;
+                
+                if (location.error) {
+                    throw new Error(location.error);
+                }
+                
+                console.log('✓ Geocoded location:', location);
+                displayLocation(location, 'browser-gps');
+                
+                detectLocationBtn.innerHTML = '<i class="fas fa-check"></i> Detected';
+                detectLocationBtn.style.background = '#27ae60';
+                
+                setTimeout(() => {
+                    detectLocationBtn.innerHTML = '<i class="fas fa-crosshairs"></i> Detect';
+                    detectLocationBtn.disabled = false;
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Location detection failed:', error);
+                
+                let errorMessage = '';
+                let helpText = '';
+                
+                if (error.code === 1) {
+                    // Permission denied
+                    errorMessage = '🚫 Location permission denied.';
+                    helpText = 'Please allow location access in your browser settings, or select a city from the dropdown.';
+                } else if (error.code === 2) {
+                    // Position unavailable
+                    errorMessage = '📡 Location unavailable.';
+                    helpText = 'Please check your GPS/Location settings, or select a city manually.';
+                } else if (error.code === 3) {
+                    // Timeout
+                    errorMessage = '⏱️ Location request timeout (took longer than 60 seconds).';
+                    helpText = 'Your GPS signal may be weak or blocked. Try moving to an open area with clear sky view, enable High Accuracy mode in your device settings, or select your city from the dropdown.';
+                } else {
+                    errorMessage = '❌ Failed to detect location.';
+                    helpText = error.message || 'Please select a city manually or enter coordinates.';
+                }
+                
+                showLocationFeedback('warning', `${errorMessage} ${helpText}`);
+                
+                // Show helpful tooltip
+                setTimeout(() => {
+                    if (confirm(`${errorMessage}\n\n${helpText}\n\nWould you like to select your city manually from the dropdown?`)) {
+                        citySelect.focus();
+                    }
+                }, 500);
+                
+                detectLocationBtn.innerHTML = '<i class="fas fa-redo"></i> Retry';
+                detectLocationBtn.style.background = '#f39c12';
+                detectLocationBtn.disabled = false;
+                
+                setTimeout(() => {
+                    detectLocationBtn.innerHTML = '<i class="fas fa-crosshairs"></i> Detect';
+                    detectLocationBtn.style.background = '#27ae60';
+                }, 4000);
+            }
+        }
+
+        // Attach event listener for detect button (after function definition)
+        detectLocationBtn.addEventListener('click', detectLocation);
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
