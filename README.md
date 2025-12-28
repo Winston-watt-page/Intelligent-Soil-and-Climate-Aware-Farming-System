@@ -139,15 +139,15 @@ python app.py
 ## Screenshots
 
 ### Main Interface
-![Main Interface](screenshots/main-interface.png)
+![Main Interface](screenshots/Main Interface.png)
 *Upload soil images and get instant classification results*
 
 ### Results Page
-![Results](screenshots/results-page.png)
+![Results](screenshots/Results.png)
 *Comprehensive analysis with crop recommendations and planting calendar*
 
 ### Weather Forecast
-![Weather](screenshots/weather-forecast.png)
+![Weather](screenshots/Weather.png)
 *7-day weather forecast integration*
 
 > **Note**: Add screenshots to a `screenshots/` directory in your repository.
