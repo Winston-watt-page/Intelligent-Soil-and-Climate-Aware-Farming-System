@@ -139,7 +139,7 @@ python app.py
 ## Screenshots
 
 ### Main Interface
-![Main Interface](screenshots/Main Interface.png)
+![Main Interface](screenshots/MainInterface.png)
 *Upload soil images and get instant classification results*
 
 ### Results Page
