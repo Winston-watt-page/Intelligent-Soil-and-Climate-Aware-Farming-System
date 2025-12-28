@@ -150,15 +150,13 @@ python app.py
 ![Weather](screenshots/Weather.png)
 *7-day weather forecast integration*
 
-> **Note**: Add screenshots to a `screenshots/` directory in your repository.
-
 ---
 
 ## Live Demo
 
-🌐 **Demo**: [Coming Soon]
+🌐 **Demo**:
 
-📹 **Video Demo**: [Add YouTube link]
+📹 **Video Demo**: The live demo video will be added shortly.
 
 ---
 
