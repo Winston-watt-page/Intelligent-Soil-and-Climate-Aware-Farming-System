@@ -76,7 +76,7 @@ python app.py
 - Harvest date predictions based on planting date
 - Monthly planting schedule visualization
 
-### 6. **Yield Prediction** (Experimental)
+### 6. **Yield Prediction**
 - Crop yield estimation based on soil type and weather conditions
 - Considers soil health parameters (NPK, pH, moisture)
 - Provides estimated yield in tons/hectare
