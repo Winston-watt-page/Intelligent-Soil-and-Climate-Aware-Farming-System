@@ -20,7 +20,7 @@ Implemented using **TensorFlow** and **OpenCV**, the system performs data fusion
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/Intelligent-Soil-and-Climate-Aware-Farming-System.git
+git clone https://github.com/Winston-watt-page/Intelligent-Soil-and-Climate-Aware-Farming-System.git
 cd Intelligent-Soil-and-Climate-Aware-Farming-System
 
 # Create and activate virtual environment (Windows)
@@ -627,7 +627,7 @@ If you use this system in your research, please cite:
   year={2025},
   description={An AI-powered system for soil classification, crop recommendation, and agricultural decision support},
   technology={TensorFlow, Keras, OpenCV, Flask},
-  url={https://github.com/yourusername/Intelligent-Soil-and-Climate-Aware-Farming-System}
+  url={https://github.com/Winston-watt-page/Intelligent-Soil-and-Climate-Aware-Farming-System}
 }
 ```
 
