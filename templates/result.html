@@ -265,6 +265,153 @@
             font-weight: 600;
         }
 
+        .soil-type-0 {
+            background: #8B4513;
+        }
+
+        .soil-type-1 {
+            background: #2C1810;
+        }
+
+        .soil-type-2 {
+            background: #CD853F;
+        }
+
+        .soil-type-3 {
+            background: #A0522D;
+        }
+
+        .health-score-box {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
+        }
+
+        .health-score-value {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .health-status-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .health-score-excellent {
+            background: linear-gradient(135deg, #27ae6022 0%, #27ae6011 100%);
+            border-color: #27ae60;
+            color: #27ae60;
+        }
+
+        .health-score-good {
+            background: linear-gradient(135deg, #2ecc7122 0%, #2ecc7111 100%);
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .health-score-fair {
+            background: linear-gradient(135deg, #f39c1222 0%, #f39c1211 100%);
+            border-color: #f39c12;
+            color: #f39c12;
+        }
+
+        .health-score-poor {
+            background: linear-gradient(135deg, #e67e2222 0%, #e67e2211 100%);
+            border-color: #e67e22;
+            color: #e67e22;
+        }
+
+        .health-score-critical {
+            background: linear-gradient(135deg, #e74c3c22 0%, #e74c3c11 100%);
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
+
+        .parameter-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #ddd;
+        }
+
+        .parameter-card-optimal {
+            border-left-color: #27ae60;
+        }
+
+        .parameter-card-low {
+            border-left-color: #e74c3c;
+        }
+
+        .parameter-card-high {
+            border-left-color: #f39c12;
+        }
+
+        .parameter-status {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .parameter-status-optimal {
+            background: #27ae6022;
+            color: #27ae60;
+        }
+
+        .parameter-status-low {
+            background: #e74c3c22;
+            color: #e74c3c;
+        }
+
+        .parameter-status-high {
+            background: #f39c1222;
+            color: #f39c12;
+        }
+
+        .fertilizer-card {
+            margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            border-radius: 12px;
+            border-left: 5px solid #27ae60;
+        }
+
+        .fertilizer-card-high {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-left-color: #e74c3c;
+        }
+
+        .fertilizer-card-medium {
+            background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);
+            border-left-color: #f39c12;
+        }
+
+        .fertilizer-card-low {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            border-left-color: #27ae60;
+        }
+
+        .fertilizer-title-high { color: #c62828; }
+        .fertilizer-title-medium { color: #ef6c00; }
+        .fertilizer-title-low { color: #2e7d32; }
+
+        .fertilizer-badge-high {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .fertilizer-badge-medium {
+            background: #f39c12;
+            color: white;
+        }
+
+        .fertilizer-badge-low {
+            background: #27ae60;
+            color: white;
+        }
+
         .action-buttons {
             display: flex;
             gap: 1rem;
@@ -365,11 +512,11 @@
         }
 
         body.tamil-mode .english-content {
-            display: none;
+            display: none !important;
         }
 
         body.tamil-mode .tamil-content {
-            display: block;
+            display: block !important;
         }
 
         /* Inline language content - for text within headings */
@@ -382,11 +529,11 @@
         }
 
         body.tamil-mode .english-content.inline {
-            display: none;
+            display: none !important;
         }
 
         body.tamil-mode .tamil-content.inline {
-            display: inline;
+            display: inline !important;
         }
 
         @media (max-width: 768px) {
@@ -436,20 +583,482 @@
             }
         }
 
-        /* Print styles */
+        /* Print styles - Professional Two Page Report */
+        @page {
+            size: A4;
+            margin: 10mm;
+        }
+
         @media print {
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            html, body {
+                width: 100%;
+                background: white;
+                color: #1a1a1a;
+                font-size: 9.5px;
+                line-height: 1.4;
+                font-family: 'Arial', sans-serif;
+            }
+
             body {
+                page-break-after: avoid;
+            }
+
+            .header, .lang-toggle, .action-buttons, 
+            .social-links, footer .social-links,
+            details, summary {
+                display: none !important;
+            }
+
+            .container {
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
                 background: white;
             }
-            
-            .header, .lang-toggle, .action-buttons {
+
+            /* Main Title Section - Page 1 */
+            div[style*="text-align: center; padding: 2rem 0 3rem 0"],
+            .page-title {
+                text-align: center;
+                page-break-after: avoid;
+                margin: 0 0 8px 0;
+                background: linear-gradient(135deg, #2d7a3e 0%, #1f5a2a 100%);
+                color: white;
+                padding: 10px 8px;
+                border: 2px solid #1f5a2a;
+                border-radius: 5px;
+            }
+
+            div[style*="text-align: center; padding: 2rem 0 3rem 0"] h1 {
+                font-size: 16px !important;
+                font-weight: bold;
+                color: white !important;
+                text-shadow: none !important;
+                margin: 0;
+                padding: 0;
+                letter-spacing: 0.5px;
+            }
+
+            div[style*="text-align: center; padding: 2rem 0 3rem 0"] p {
+                font-size: 10px;
+                color: #e8f5e9 !important;
+                margin: 3px 0 0 0;
+                font-weight: 500;
+            }
+
+            /* Results Grid */
+            .results-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                margin: 0 0 8px 0;
+                page-break-inside: avoid;
+            }
+
+            .result-card {
+                background: white;
+                padding: 7px;
+                margin: 0;
+                border: 2px solid #2d7a3e;
+                border-radius: 4px;
+                box-shadow: 0 2px 5px rgba(45, 122, 62, 0.15);
+                page-break-inside: avoid;
+                font-size: 9px;
+            }
+
+            .result-card h3 {
+                font-size: 11px;
+                font-weight: bold;
+                color: white;
+                background: linear-gradient(90deg, #2d7a3e 0%, #27ae60 100%);
+                border: none;
+                padding: 4px 5px;
+                margin: 0 0 5px 0;
+                display: block;
+                text-align: left;
+                border-radius: 3px;
+                letter-spacing: 0.3px;
+            }
+
+            .result-card h3 i {
                 display: none;
             }
-            
-            .result-card, .crop-recommendations {
-                break-inside: avoid;
-                box-shadow: none;
-                border: 1px solid #ddd;
+
+            .result-card h3 span[style*="display: block"] {
+                font-size: 8.5px !important;
+                font-weight: 500;
+                color: #333 !important;
+                margin: 3px 0 0 0 !important;
+            }
+
+            .soil-image {
+                max-width: 100%;
+                max-height: 110px;
+                border: 2px solid #2d7a3e;
+                margin: 3px 0;
+                border-radius: 3px;
+            }
+
+            .soil-type {
+                background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%) !important;
+                color: #1a1a1a !important;
+                padding: 7px;
+                border: 2px solid #2d7a3e;
+                border-radius: 4px;
+                text-align: center;
+                margin: 0 0 5px 0;
+                box-shadow: 0 2px 5px rgba(45, 122, 62, 0.15) !important;
+            }
+
+            .soil-type h2 {
+                font-size: 13px;
+                font-weight: bold;
+                color: #2d7a3e;
+                margin: 0 0 3px 0;
+                text-shadow: none !important;
+                letter-spacing: 0.5px;
+            }
+
+            .soil-type p {
+                font-size: 8.5px;
+                margin: 1px 0;
+                line-height: 1.3;
+                opacity: 1 !important;
+                color: #333 !important;
+            }
+
+            .info-section {
+                background: linear-gradient(90deg, #f5f5f5 0%, #f9f9f9 100%);
+                padding: 6px;
+                border-left: 4px solid #27ae60;
+                border-radius: 3px;
+                margin: 0 0 5px 0;
+                page-break-inside: avoid;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+
+            .info-section h3 {
+                font-size: 10px;
+                font-weight: bold;
+                color: #2d7a3e;
+                margin: 0 0 3px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+
+            .info-section h3 i {
+                display: none;
+            }
+
+            .info-section p {
+                font-size: 8.5px;
+                color: #1a1a1a;
+                line-height: 1.35;
+                margin: 0;
+                text-align: justify;
+            }
+
+            /* Weather Data - Professional */
+            .result-card:has(> h3 > i.fa-cloud-sun) {
+                page-break-inside: avoid;
+                margin: 0 0 6px 0;
+            }
+
+            .result-card:has(> h3 > i.fa-cloud-sun) div[style*="display: grid"] {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr 1fr 1fr !important;
+                gap: 3px;
+            }
+
+            .result-card:has(> h3 > i.fa-cloud-sun) div[style*="display: grid"] > div {
+                text-align: center;
+                padding: 4px !important;
+                background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%) !important;
+                border: 1px solid #2d7a3e;
+                border-radius: 3px;
+                font-size: 8.5px;
+                font-weight: 500;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+
+            .result-card:has(> h3 > i.fa-cloud-sun) div[style*="display: grid"] > div p {
+                margin: 2px 0;
+                text-align: center;
+            }
+
+            .result-card:has(> h3 > i.fa-cloud-sun) div[style*="display: grid"] > div i {
+                display: none;
+            }
+
+            /* 7-Day Forecast - Hidden */
+            .result-card:has(> h3 > i.fa-calendar-week) {
+                display: none !important;
+            }
+
+            /* Crop Recommendations */
+            .crop-recommendations {
+                background: white;
+                padding: 7px;
+                border: 2px solid #2d7a3e;
+                border-radius: 4px;
+                margin: 0 0 6px 0;
+                page-break-inside: avoid;
+                box-shadow: 0 2px 5px rgba(45, 122, 62, 0.15);
+            }
+
+            .crop-recommendations h3 {
+                font-size: 11px;
+                font-weight: bold;
+                color: white;
+                background: linear-gradient(90deg, #2d7a3e 0%, #27ae60 100%);
+                border: none;
+                padding: 4px 5px;
+                margin: 0 0 5px 0;
+                border-radius: 3px;
+                letter-spacing: 0.3px;
+            }
+
+            .crop-recommendations h3 i {
+                display: none;
+            }
+
+            .crops-grid {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 3px;
+            }
+
+            .crop-item {
+                background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%) !important;
+                padding: 4px;
+                border: 1px solid #2d7a3e;
+                border-radius: 3px;
+                text-align: center;
+                font-size: 8px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+                font-weight: 500;
+            }
+
+            .crop-item i {
+                display: none !important;
+            }
+
+            .crop-item .english,
+            .crop-item .tamil {
+                display: block;
+                margin: 1px 0;
+                font-size: 8px;
+                font-weight: 600;
+                color: #2d7a3e;
+            }
+
+            /* Yield Predictions - Professional */
+            .result-card:has(> h3 > i.fa-star) {
+                page-break-inside: avoid;
+                margin: 0 0 6px 0;
+            }
+
+            .result-card:has(> h3 > i.fa-star) > div[style*="display: grid"],
+            .result-card:has(> h3 > i.fa-leaf) > div[style*="display: grid"] {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 3px;
+            }
+
+            .result-card:has(> h3 > i.fa-star) > div[style*="display: grid"] > div,
+            .result-card:has(> h3 > i.fa-leaf) > div[style*="display: grid"] > div {
+                padding: 5px !important;
+                background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%) !important;
+                border: 1px solid #2d7a3e;
+                border-radius: 3px;
+                font-size: 8.5px;
+                page-break-inside: avoid;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+
+            /* Soil Features - Professional */
+            .result-card:has(> h3 > i.fa-layer-group) {
+                page-break-inside: avoid;
+                margin: 0 0 6px 0;
+            }
+
+            .result-card:has(> h3 > i.fa-layer-group) > div[style*="display: grid"] {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 3px;
+            }
+
+            .result-card:has(> h3 > i.fa-layer-group) > div[style*="display: grid"] > div {
+                padding: 4px !important;
+                background: linear-gradient(135deg, #f0f7f4 0%, #e8f5e9 100%) !important;
+                border: 1px solid #2d7a3e;
+                border-radius: 3px;
+                font-size: 8px;
+                text-align: center;
+                font-weight: 500;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+
+            /* Hide secondary content */
+            .result-card:has(> h3 > i.fa-heartbeat),
+            .result-card:has(> h3 > i.fa-flask),
+            .result-card:has(> h3 > i.fa-tasks) {
+                display: none !important;
+            }
+
+            /* Secondary Crops - Show on Print with Professional Styling */
+            .result-card:has(> h3 > i.fa-leaf) {
+                background: white;
+                padding: 7px;
+                border: 2px solid #f39c12;
+                border-radius: 4px;
+                margin: 0 0 6px 0;
+                page-break-inside: avoid;
+                box-shadow: 0 2px 5px rgba(243, 156, 18, 0.15);
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) h3 {
+                font-size: 11px;
+                font-weight: bold;
+                color: white;
+                background: linear-gradient(90deg, #f39c12 0%, #e67e22 100%);
+                border: none;
+                padding: 4px 5px;
+                margin: 0 0 5px 0;
+                border-radius: 3px;
+                letter-spacing: 0.3px;
+                display: block;
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) h3 i {
+                display: none;
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) > div[style*="display: grid"] {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 3px;
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) > div[style*="display: grid"] > div {
+                padding: 5px !important;
+                background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%) !important;
+                border: 1px solid #f39c12;
+                border-radius: 3px;
+                font-size: 8.5px;
+                page-break-inside: avoid;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) h4 {
+                font-size: 9px;
+                font-weight: bold;
+                color: #f39c12 !important;
+                margin: 0 0 2px 0;
+            }
+
+            .result-card:has(> h3 > i.fa-leaf) p {
+                font-size: 8px;
+                color: #333;
+                margin: 1px 0;
+                text-align: left;
+            }
+
+            /* Utility */
+            ul, ol {
+                margin-left: 12px;
+            }
+
+            li {
+                margin: 1px 0;
+                font-size: 8.5px;
+            }
+
+            /* Hide icons */
+            i, .fas, .far, .fab {
+                display: none !important;
+            }
+
+            /* Text alignment */
+            p {
+                text-align: justify;
+            }
+
+            h2, h3, h4 {
+                page-break-after: avoid;
+            }
+
+            /* Tables */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 3px 0;
+            }
+
+            table, th, td {
+                border: 1px solid #2d7a3e;
+                padding: 2px;
+                font-size: 8px;
+            }
+
+            th {
+                background: #2d7a3e;
+                color: white;
+                font-weight: bold;
+            }
+
+            /* Language - Print Active Only */
+            .english-content {
+                display: block !important;
+            }
+
+            .tamil-content {
+                display: none !important;
+            }
+
+            body.tamil-mode .english-content {
+                display: none !important;
+            }
+
+            body.tamil-mode .tamil-content {
+                display: block !important;
+            }
+
+            .english-content.inline {
+                display: inline !important;
+            }
+
+            .tamil-content.inline {
+                display: none !important;
+            }
+
+            body.tamil-mode .english-content.inline {
+                display: none !important;
+            }
+
+            body.tamil-mode .tamil-content.inline {
+                display: inline !important;
+            }
+
+            /* Enforce single language */
+            body .tamil-content {
+                display: none !important;
+            }
+
+            body.tamil-mode .english-content {
+                display: none !important;
+            }
+
+            /* Remove whitespace */
+            div[style*="margin-top: 3rem"],
+            div[style*="padding: 2rem"] {
+                margin: 0 !important;
+                padding: 0 !important;
             }
         }
     </style>
@@ -510,7 +1119,9 @@
 
             <!-- Soil Type Result -->
             <div class="result-card">
-                <div class="soil-type" style="background: {{ soil_info.color }}">
+                <!-- stylelint-disable -->
+                <div class="soil-type soil-type-{{ soil_id }}">
+                <!-- stylelint-enable -->
                     <h2 class="english-content">{{ soil_info.name_en }}</h2>
                     <h2 class="tamil-content" style="font-family: 'Noto Sans Tamil', sans-serif;">{{ soil_info.name_ta }}</h2>
                     <p class="english-content">{{ soil_info.description_en }}</p>
@@ -566,8 +1177,14 @@
                 <span class="english-content inline"> Current Weather Data</span>
                 <span class="tamil-content inline"> தற்போதைய வானிலை தரவு</span>
                 {% if location %}
-                <span style="font-size: 0.85rem; font-weight: normal; color: #666;">
-                    - {{ location.city }}, {{ location.region if location.region else '' }}
+                <span style="font-size: 0.85rem; font-weight: normal; color: #666; display: block; margin-top: 0.5rem;">
+                    📍 <strong>{{ location.city }}</strong>
+                    {% if location.district or location.region %}<span style="opacity: 0.8;">• {{ location.district or location.region }}</span>{% endif %}
+                    {% if location.accuracy %}<span style="opacity: 0.75;">(±{{ location.accuracy|int }}m)</span>{% endif %}
+                    {% if location.latitude is not none and location.longitude is not none %}
+                    • Lat: {{ "%.4f"|format(location.latitude) }}, Lon: {{ "%.4f"|format(location.longitude) }}
+                    {% endif %}
+                    • {% if location.source == 'mappls' %}Mappls API (Village-Level){% elif location.source == 'browser-gps' or location.source == 'bigdatacloud' or location.source == 'nominatim' %}GPS-Based{% elif location.source == 'ip-api.com' or location.source == 'ipinfo.io' or location.source == 'default' %}IP-Based (Approximate){% elif location.source == 'manual' %}Manual Entry{% else %}Location-Based{% endif %}
                 </span>
                 {% endif %}
             </h3>
@@ -702,16 +1319,16 @@
                         </summary>
                         <div style="margin-top: 0.75rem; padding: 0.75rem; background: white; border-radius: 6px;">
                             <p style="font-size: 0.8rem; margin: 0.25rem 0;">
-                                <i class="fas fa-cloud-sun"></i> Weather: <strong>{{ "%.2f"|format(yield.factors.weather_factor) }}</strong>
+                                <i class="fas fa-cloud-sun"></i> Weather: <strong>{{ "%.1f"|format(yield.weather_impact) }}%</strong>
                             </p>
                             <p style="font-size: 0.8rem; margin: 0.25rem 0;">
-                                <i class="fas fa-flask"></i> Soil Quality: <strong>{{ "%.2f"|format(yield.factors.soil_quality_factor) }}</strong>
+                                <i class="fas fa-flask"></i> Soil Quality: <strong>{{ "%.1f"|format(yield.soil_quality) }}%</strong>
                             </p>
                             <p style="font-size: 0.8rem; margin: 0.25rem 0;">
-                                <i class="fas fa-tint"></i> Moisture: <strong>{{ "%.2f"|format(yield.factors.moisture_factor) }}</strong>
+                                <i class="fas fa-tint"></i> Baseline Yield: <strong>{{ yield.baseline_yield }} tons/ha</strong>
                             </p>
                             <p style="font-size: 0.8rem; margin: 0.25rem 0;">
-                                <i class="fas fa-atom"></i> Nutrient: <strong>{{ "%.2f"|format(yield.factors.nutrient_factor) }}</strong>
+                                <i class="fas fa-chart-line"></i> LSTM Confidence: <strong>{{ "%.1f"|format(yield.lstm_confidence) }}%</strong>
                             </p>
                         </div>
                     </details>
@@ -854,13 +1471,15 @@
             </h3>
             
             <!-- Health Score -->
-            <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, {{ soil_health.status_color }}22 0%, {{ soil_health.status_color }}11 100%); border-radius: 12px; margin-bottom: 1.5rem; border: 2px solid {{ soil_health.status_color }};">
-                <div style="font-size: 4rem; font-weight: bold; color: {{ soil_health.status_color }}; margin-bottom: 0.5rem;">
+            <!-- stylelint-disable -->
+            <div class="health-score-box health-score-{{ soil_health.status|lower }}">
+                <div class="health-score-value">
                     {{ soil_health.health_score }}
                 </div>
-                <div style="font-size: 1.5rem; font-weight: 600; color: {{ soil_health.status_color }};">
+                <div class="health-status-value">
                     {{ soil_health.status }}
                 </div>
+            <!-- stylelint-enable -->
                 <div style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
                     <span class="english-content">Soil Health Score</span>
                     <span class="tamil-content">மண் ஆரோக்கிய மதிப்பெண்</span>
@@ -868,12 +1487,13 @@
             </div>
             
             <!-- Parameter Details -->
+            <!-- stylelint-disable -->
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
                 {% for param_name, param_data in soil_health.parameters.items() %}
-                <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; border-left: 4px solid {% if param_data.status == 'Optimal' %}#27ae60{% elif param_data.status == 'Low' %}#e74c3c{% else %}#f39c12{% endif %};">
+                <div class="parameter-card parameter-card-{{ param_data.status|lower }}">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
                         <span style="font-weight: 600; text-transform: capitalize;">{{ param_name.replace('_', ' ') }}</span>
-                        <span style="font-size: 0.85rem; padding: 0.25rem 0.5rem; background: {% if param_data.status == 'Optimal' %}#27ae6022{% elif param_data.status == 'Low' %}#e74c3c22{% else %}#f39c1222{% endif %}; color: {% if param_data.status == 'Optimal' %}#27ae60{% elif param_data.status == 'Low' %}#e74c3c{% else %}#f39c12{% endif %}; border-radius: 12px; font-weight: 600;">
+                        <span class="parameter-status parameter-status-{{ param_data.status|lower }}">
                             {{ param_data.status }}
                         </span>
                     </div>
@@ -884,6 +1504,7 @@
                 </div>
                 {% endfor %}
             </div>
+            <!-- stylelint-enable -->
             
             <!-- Issues -->
             {% if soil_health.issues %}
@@ -913,15 +1534,16 @@
             </h3>
             
             {% for rec in fertilizer_recs %}
-            <div style="margin-bottom: 1.5rem; padding: 1.25rem; background: {% if rec.priority == 'High' %}linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%){% elif rec.priority == 'Medium' %}linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%){% else %}linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%){% endif %}; border-radius: 12px; border-left: 5px solid {% if rec.priority == 'High' %}#e74c3c{% elif rec.priority == 'Medium' %}#f39c12{% else %}#27ae60{% endif %};">
+            <!-- stylelint-disable -->
+            <div class="fertilizer-card fertilizer-card-{{ rec.priority|lower }}">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h4 style="margin: 0; color: {% if rec.priority == 'High' %}#c62828{% elif rec.priority == 'Medium' %}#ef6c00{% else %}#2e7d32{% endif %};">
+                    <h4 style="margin: 0;" class="fertilizer-title-{{ rec.priority|lower }}">
                         <i class="fas fa-exclamation-circle"></i> {{ rec.issue }}
                     </h4>
-                    <span style="background: {% if rec.priority == 'High' %}#e74c3c{% elif rec.priority == 'Medium' %}#f39c12{% else %}#27ae60{% endif %}; color: white; padding: 0.25rem 0.75rem; border-radius: 15px; font-size: 0.85rem; font-weight: 600;">
+                    <span class="parameter-status fertilizer-badge-{{ rec.priority|lower }}" style="border-radius: 15px;">
                         {{ rec.priority }} Priority
                     </span>
-                </div>
+            <!-- stylelint-enable -->
                 
                 <div style="margin-bottom: 0.75rem;">
                     <p style="margin: 0 0 0.5rem 0; font-weight: 600; color: #555;">
@@ -1014,10 +1636,10 @@
                 <span class="english-content">Analyze Another Sample</span>
                 <span class="tamil-content">மற்றொரு மாதிரியை பகுப்பாய்வு செய்யுங்கள்</span>
             </a>
-            <button class="btn btn-secondary" onclick="window.print()">
-                <i class="fas fa-download"></i>
-                <span class="english-content">Download Report</span>
-                <span class="tamil-content">அறிக்கையைப் பதிவிறக்கவும்</span>
+            <button class="btn btn-secondary" onclick="generatePrintReport()" style="cursor: pointer;">
+                <i class="fas fa-file-pdf"></i>
+                <span class="english-content">📄 Download PDF Report</span>
+                <span class="tamil-content">📄 PDF அறிக்கையைப் பதிவிறக்கவும்</span>
             </button>
         </div>
 
@@ -1048,7 +1670,7 @@
             </div>
             <div style="border-top: 1px solid #eee; padding-top: 1.5rem; margin-top: 1rem;">
                 <p style="color: #7f8c8d; font-size: 0.9rem;">
-                    <i class="far fa-copyright"></i> 2026 Intelligent Soil & Climate-Aware Farming System
+                    <i class="far fa-copyright"></i> 2026 Intelligent Farming System
                 </p>
             </div>
         </footer>
@@ -1073,6 +1695,90 @@
             const length = Math.min(...arrays.map(arr => arr.length));
             return Array.from({ length }, (_, i) => arrays.map(arr => arr[i]));
         };
+
+        // Enhanced Print Function for Professional PDF Report
+        function generatePrintReport() {
+            // Get the soil type name
+            const soilTypes = document.querySelectorAll('.soil-type h2');
+            let soilType = 'Soil Analysis';
+            if (soilTypes.length > 0) {
+                const englishContent = soilTypes[0].querySelector('.english-content');
+                const tamilContent = soilTypes[0].querySelector('.tamil-content');
+                soilType = document.body.classList.contains('tamil-mode') && tamilContent 
+                    ? tamilContent.textContent 
+                    : englishContent 
+                        ? englishContent.textContent 
+                        : soilTypes[0].textContent;
+            }
+
+            // Create timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+
+            // Update document title for PDF
+            const originalTitle = document.title;
+            document.title = `Soil_Analysis_Report_${soilType.replace(/\s+/g, '_')}_${now.getTime()}.pdf`;
+
+            // Add print timestamp before printing
+            const printTimestamp = document.createElement('div');
+            printTimestamp.innerHTML = `
+                <div style="display: none;" class="print-meta">
+                    <p style="font-size: 8px; color: #999; text-align: right;">
+                        <span class="english-content">Generated on: ${timestamp}</span>
+                        <span class="tamil-content">உருவாக்கப்பட்ட தேதி: ${timestamp}</span>
+                    </p>
+                </div>
+            `;
+            document.body.appendChild(printTimestamp);
+
+            // Trigger print dialog
+            window.print();
+
+            // Restore original title after print
+            setTimeout(() => {
+                document.title = originalTitle;
+                printTimestamp.remove();
+            }, 500);
+        }
+
+        // Override print button to use enhanced function
+        document.addEventListener('DOMContentLoaded', () => {
+            const printButtons = document.querySelectorAll('.btn.btn-secondary');
+            printButtons.forEach(btn => {
+                if (btn.innerHTML.includes('Download') || btn.innerHTML.includes('Print')) {
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        generatePrintReport();
+                    };
+                }
+            });
+
+            // Add keyboard shortcut (Ctrl+P or Cmd+P)
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    generatePrintReport();
+                }
+            });
+        });
+
+        // Print event handlers
+        window.addEventListener('beforeprint', () => {
+            console.log('Preparing report for printing...');
+            // Ensure all content is visible before printing
+            document.body.style.visibility = 'visible';
+        });
+
+        window.addEventListener('afterprint', () => {
+            console.log('Print dialog closed');
+        });
     </script>
 </body>
 </html>

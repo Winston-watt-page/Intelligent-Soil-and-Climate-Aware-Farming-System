@@ -1,10 +1,11 @@
+# pyright: reportMissingImports=false, reportMissingModuleSource=false
+
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 import numpy as np
 from flask import Flask, request, render_template, jsonify, session
 from werkzeug.utils import secure_filename
 import tensorflow as tf
-from tensorflow.keras.layers import DepthwiseConv2D
 import h5py
 from hybrid_model import HybridSoilClassifier
 from weather_service import WeatherService
@@ -24,7 +25,7 @@ app.jinja_env.globals.update(zip=zip)
 model_path = "models/soil_classifier_93_86.h5"
 
 # Custom DepthwiseConv2D to handle 'groups' parameter from older models
-class CustomDepthwiseConv2D(DepthwiseConv2D):
+class CustomDepthwiseConv2D(tf.keras.layers.DepthwiseConv2D):
     def __init__(self, **kwargs):
         # Remove 'groups' parameter if present (not supported in new versions)
         kwargs.pop('groups', None)
@@ -164,6 +165,8 @@ def get_location():
     """API endpoint to auto-detect user's location"""
     try:
         location = geo_service.get_current_location()
+        if isinstance(location, dict) and location.get('error'):
+            return jsonify(location), 400
         return jsonify(location)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -226,6 +229,7 @@ def predict():
             city = request.form.get('city', '')
             detected_lat = request.form.get('detected_lat')
             detected_lon = request.form.get('detected_lon')
+            detected_accuracy = request.form.get('detected_accuracy')  # New: GPS accuracy in meters
             
             # Priority 1: Use detected GPS coordinates if available
             if detected_lat and detected_lon:
@@ -234,7 +238,15 @@ def predict():
                     lon = float(detected_lon)
                     location = geo_service.get_location_by_coords(lat, lon)
                     city = location['city']
-                    print(f"Using GPS coordinates: {city} ({lat}, {lon})")
+                    # Include accuracy if available
+                    if detected_accuracy:
+                        try:
+                            location['accuracy'] = float(detected_accuracy)
+                        except:
+                            pass
+                    # Mark as GPS-based location
+                    location['source'] = 'browser-gps'
+                    print(f"Using GPS coordinates: {city} ({lat}, {lon}) - Accuracy: {detected_accuracy}m")
                 except Exception as e:
                     print(f"Error using GPS coordinates: {e}")
                     location = None
@@ -250,12 +262,16 @@ def predict():
                 }
                 print(f"Using selected city: {city}")
             
-            # Priority 3: Auto-detect via IP
-            if not location or city == 'auto':
-                # Auto-detect location via IP
-                location = geo_service.get_current_location()
+            # Priority 3: Safe fallback when no GPS or city is selected
+            if not location:
+                location = {
+                    'city': 'Chennai',
+                    'latitude': None,
+                    'longitude': None,
+                    'source': 'default_city'
+                }
                 city = location['city']
-                print(f"Auto-detected location via IP: {city} ({location['latitude']}, {location['longitude']})")
+                print("No GPS or city provided. Falling back to Chennai.")
             
             # Standard soil type values (normalized 0-1 scale)
             soil_type_standards = {

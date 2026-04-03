@@ -3,6 +3,8 @@ Hybrid Soil Classification Model
 Combines CNN (image features) and LSTM (temporal features) for enhanced prediction
 """
 
+# pyright: reportMissingImports=false, reportMissingModuleSource=false
+
 import numpy as np
 import pandas as pd
 import tensorflow as tf

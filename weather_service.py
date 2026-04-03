@@ -16,6 +16,101 @@ class WeatherService:
     def __init__(self, api_key=None):
         self.api_key = api_key or "d079e59a8d4c7af83e5763ab6f3e70fd"  # OpenWeatherMap API key
         self.base_url = "https://api.openweathermap.org/data/2.5"
+        self.city_profiles = {
+            'chennai': (29, 75),
+            'tambaram': (29, 74),
+            'pallavaram': (29, 74),
+            'tiruchirappalli': (30, 72),
+            'trichy': (30, 72),
+            'thottiyam': (30, 72),
+            'lalgudi': (30, 72),
+            'musiri': (30, 72),
+            'srirangam': (30, 72),
+            'manachanallur': (30, 72),
+            'manapparai': (31, 68),
+            'thuvarankurichi': (30, 69),
+            'namakkal': (28, 67),
+            'mohanur': (28, 67),
+            'rasipuram': (28, 66),
+            'tiruchengode': (28, 67),
+            'paramathi velur': (29, 68),
+            'kolli hills': (22, 70),
+            'coimbatore': (26, 66),
+            'pollachi': (27, 67),
+            'mettupalayam': (25, 68),
+            'valparai': (21, 80),
+            'salem': (28, 68),
+            'attur': (29, 69),
+            'mettur': (28, 70),
+            'omalur': (28, 68),
+            'erode': (27, 66),
+            'gobichettipalayam': (27, 68),
+            'bhavani': (27, 67),
+            'perundurai': (27, 67),
+            'madurai': (31, 68),
+            'melur': (31, 67),
+            'usilampatti': (32, 66),
+            'vadipatti': (31, 68),
+            'thanjavur': (30, 73),
+            'kumbakonam': (30, 73),
+            'pattukkottai': (31, 74),
+            'thiruvidaimarudur': (30, 73),
+            'tiruppur': (27, 67),
+            'nilgiris': (18, 78),
+            'ooty': (18, 78),
+            'dindigul': (30, 69),
+            'theni': (31, 70),
+            'virudhunagar': (32, 69),
+            'sivaganga': (32, 70),
+            'ramanathapuram': (31, 74),
+            'tiruvarur': (30, 74),
+            'nagapattinam': (29, 76),
+            'pudukkottai': (31, 74),
+            'ariyalur': (30, 72),
+            'dharmapuri': (29, 67),
+            'krishnagiri': (28, 66),
+            'vellore': (29, 70),
+            'tiruvannamalai': (30, 69),
+            'ranipet': (29, 70),
+            'tirupattur': (28, 69),
+            'cuddalore': (29, 76),
+            'villupuram': (30, 75),
+            'kallakurichi': (30, 74),
+            'kanchipuram': (29, 75),
+            'chengalpattu': (29, 75),
+            'tirunelveli': (32, 74),
+            'thoothukudi': (31, 76),
+            'tenkasi': (30, 72),
+            'kanniyakumari': (30, 78),
+            'karur': (29, 68),
+            'perambalur': (30, 72)
+        }
+
+    def _get_city_profile(self, city_name):
+        normalized = (city_name or '').strip().lower()
+        if normalized in self.city_profiles:
+            return self.city_profiles[normalized]
+
+        if 'trichy' in normalized or 'tiruchirappalli' in normalized:
+            return self.city_profiles['tiruchirappalli']
+        if 'chennai' in normalized:
+            return self.city_profiles['chennai']
+        if 'coimbatore' in normalized:
+            return self.city_profiles['coimbatore']
+        if 'madurai' in normalized:
+            return self.city_profiles['madurai']
+        if 'salem' in normalized:
+            return self.city_profiles['salem']
+        if 'erode' in normalized:
+            return self.city_profiles['erode']
+        if 'thanjavur' in normalized:
+            return self.city_profiles['thanjavur']
+        if 'tirunelveli' in normalized:
+            return self.city_profiles['tirunelveli']
+        if 'tuticorin' in normalized or 'thoothukudi' in normalized:
+            return self.city_profiles['thoothukudi']
+
+        return (27, 70)
         
     def get_weather_by_coords(self, lat, lon):
         """
@@ -130,35 +225,8 @@ class WeatherService:
     def _get_demo_weather_city(self, city_name):
         """Return demo weather data for a city"""
         import random
-        
-        # Tamil Nadu cities typical weather (temperature, humidity)
-        city_weather = {
-            'Chennai': (28, 75),
-            'Coimbatore': (25, 65),
-            'Madurai': (30, 70),
-            'Salem': (27, 68),
-            'Tiruchirappalli': (29, 72),
-            'Trichy': (29, 72),
-            'Thanjavur': (29, 73),
-            'Tirunelveli': (30, 74),
-            'Erode': (26, 66),
-            'Vellore': (28, 70),
-            'Thoothukudi': (29, 75),
-            'Karur': (28, 68),
-            'Namakkal': (27, 67),
-            'Dindigul': (28, 69),
-            'Thottiyam': (28, 70),
-            'Mohanur': (28, 70)
-        }
-        
-        # Get weather data with default fallback
-        weather_data = city_weather.get(city_name, (27, 70))
-        
-        # Ensure we have exactly 2 values
-        if isinstance(weather_data, tuple) and len(weather_data) == 2:
-            base_temp, base_humidity = weather_data
-        else:
-            base_temp, base_humidity = 27, 70
+
+        base_temp, base_humidity = self._get_city_profile(city_name)
         
         return {
             'temperature': round(base_temp + random.uniform(-3, 3), 1),
@@ -233,7 +301,7 @@ class WeatherService:
         from datetime import timedelta
         
         forecasts = []
-        base_temp = 27
+        base_temp, _ = self._get_city_profile(city_name)
         
         for day in range(days):
             date = datetime.now() + timedelta(days=day)

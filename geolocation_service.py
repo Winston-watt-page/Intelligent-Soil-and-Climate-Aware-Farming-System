@@ -5,16 +5,17 @@ Automatically detects user's location based on IP address
 
 import requests
 import json
+import os
 
 
 class GeolocationService:
     """
-    Provides automatic geolocation detection using IP-based services
-    Falls back to default location if detection fails
+    Provides automatic geolocation detection using IP-based services.
+    Uses OpenStreetMap (Nominatim) for free, high-quality reverse geocoding.
     """
     
     def __init__(self):
-        # Free geolocation APIs
+        # --- API Endpoints ---
         self.ipapi_url = "http://ip-api.com/json/"
         self.ipinfo_url = "https://ipinfo.io/json"
         
@@ -36,42 +37,17 @@ class GeolocationService:
         Returns:
             dict with latitude, longitude, city, region, country
         """
-        # Try ip-api.com first (no API key needed)
-        try:
-            response = requests.get(self.ipapi_url, timeout=10)
-            if response.status_code == 200:
-                data = response.json()
-                if data.get('status') == 'success':
-                    # Check if it's a local/private IP
-                    detected_lat = data.get('lat')
-                    detected_lon = data.get('lon')
-                    
-                    # If coordinates are 0,0 or missing, it's likely localhost
-                    if detected_lat and detected_lon and (detected_lat != 0 or detected_lon != 0):
-                        return {
-                            'latitude': detected_lat,
-                            'longitude': detected_lon,
-                            'city': data.get('city', self.default_location['city']),
-                            'region': data.get('regionName', self.default_location['region']),
-                            'country': data.get('country', self.default_location['country']),
-                            'country_code': data.get('countryCode', self.default_location['country_code']),
-                            'zip': data.get('zip', ''),
-                            'timezone': data.get('timezone', 'Asia/Kolkata'),
-                            'isp': data.get('isp', 'Unknown'),
-                            'source': 'ip-api.com'
-                        }
-        except Exception as e:
-            print(f"IP-API failed: {e}")
-        
-        # Fallback to default location
-        print("WARNING: IP geolocation unavailable (localhost). Using default location (Chennai)")
-        print("TIP: Use browser geolocation or deploy to get accurate location")
-        return self.default_location
+        print("WARNING: IP geolocation is disabled to avoid inaccurate location results.")
+        print("TIP: Use browser geolocation or select a city manually for accurate results.")
+        return {
+            'error': 'IP-based auto-detection is disabled because it is inaccurate. Use GPS or select a city manually.'
+        }
     
     def get_location_by_coords(self, lat, lon):
         """
-        Reverse geocoding: Get location details from coordinates
-        Uses multiple APIs for better reliability
+        Reverse geocoding: Get location details from coordinates.
+        Uses OpenStreetMap (Nominatim) as the primary provider for its accuracy
+        with village-level data in India and falls back to other services.
         
         Args:
             lat: Latitude
@@ -81,8 +57,61 @@ class GeolocationService:
             dict with location details
         """
         print(f"Reverse geocoding coordinates: {lat}, {lon}")
-        
-        # Method 1: Try BigDataCloud (free, no API key, reliable)
+
+        # --- Method 1: Nominatim (OpenStreetMap) - Free & Excellent for Village Data ---
+        # Attribution: Remember to credit "© OpenStreetMap contributors" in the UI.
+        try:
+            url = "https://nominatim.openstreetmap.org/reverse"
+            params = {
+                'lat': lat,
+                'lon': lon,
+                'format': 'json',
+                'addressdetails': 1,
+                'accept-language': 'en' # Ensure English results
+            }
+            headers = {
+                'User-Agent': 'IntelligentFarmingSystem/1.0 (Educational Project)'
+            }
+            
+            response = requests.get(url, params=params, headers=headers, timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                address = data.get('address', {})
+                
+                # Prioritize specific location types for accuracy in rural India
+                village = address.get('village', '')
+                hamlet = address.get('hamlet', '')
+                suburb = address.get('suburb', '')
+                town = address.get('town', '')
+                city = address.get('city', '')
+                
+                # Find the most specific name available
+                specific_location = village or hamlet or suburb or town or city or 'Unknown'
+                
+                district = address.get('county', address.get('state_district', 'Unknown'))
+                state = address.get('state', 'Unknown')
+                country = address.get('country', 'Unknown')
+                country_code = address.get('country_code', 'un').upper()
+
+                print(f"Nominatim Success: {specific_location}, {district}, {state}")
+                
+                return {
+                    'latitude': float(lat),
+                    'longitude': float(lon),
+                    'city': specific_location,
+                    'village': village,
+                    'town': town,
+                    'district': district,
+                    'state': state,
+                    'country': country,
+                    'country_code': country_code,
+                    'display_name': data.get('display_name', f"{specific_location}, {state}"),
+                    'source': 'nominatim'
+                }
+        except Exception as e:
+            print(f"WARNING: Nominatim (OpenStreetMap) failed: {e}")
+
+        # --- Method 2: BigDataCloud (Fallback) ---
         try:
             url = "https://api.bigdatacloud.net/data/reverse-geocode-client"
             params = {
@@ -94,104 +123,43 @@ class GeolocationService:
             response = requests.get(url, params=params, timeout=5)
             if response.status_code == 200:
                 data = response.json()
-                city = data.get('city') or data.get('locality') or data.get('principalSubdivision', 'Unknown')
-                region = data.get('principalSubdivision', 'Unknown')
+                
+                city = data.get('city', '')
+                locality = data.get('locality', '')
+                principalSubdiv = data.get('principalSubdivision', 'Unknown')
                 country = data.get('countryName', 'Unknown')
                 country_code = data.get('countryCode', 'UN')
                 
-                print(f"BigDataCloud: {city}, {region}, {country}")
+                specific_location = locality or city or principalSubdiv
+                
+                print(f"BigDataCloud Fallback: {specific_location}, {principalSubdiv}, {country}")
                 
                 return {
                     'latitude': float(lat),
                     'longitude': float(lon),
-                    'city': city,
-                    'region': region,
+                    'city': specific_location,
+                    'village': '', # Not provided by this API
+                    'town': '', # Not provided by this API
+                    'district': principalSubdiv,
+                    'state': principalSubdiv,
                     'country': country,
                     'country_code': country_code,
-                    'display_name': f"{city}, {region}, {country}",
+                    'display_name': f"{specific_location}, {principalSubdiv}",
                     'source': 'bigdatacloud'
                 }
         except Exception as e:
             print(f"WARNING: BigDataCloud failed: {e}")
         
-        # Method 2: Try Nominatim (OpenStreetMap)
-        try:
-            url = "https://nominatim.openstreetmap.org/reverse"
-            params = {
-                'lat': lat,
-                'lon': lon,
-                'format': 'json',
-                'addressdetails': 1,
-                'zoom': 10
-            }
-            headers = {
-                'User-Agent': 'SoilClassificationApp/1.0 (Educational Project)'
-            }
-            
-            response = requests.get(url, params=params, headers=headers, timeout=5)
-            if response.status_code == 200:
-                data = response.json()
-                address = data.get('address', {})
-                
-                city = (address.get('city') or 
-                       address.get('town') or 
-                       address.get('village') or 
-                       address.get('municipality') or
-                       address.get('county', 'Unknown'))
-                region = address.get('state', 'Unknown')
-                country = address.get('country', 'Unknown')
-                country_code = address.get('country_code', 'UN').upper()
-                
-                print(f"Nominatim: {city}, {region}, {country}")
-                
-                return {
-                    'latitude': float(lat),
-                    'longitude': float(lon),
-                    'city': city,
-                    'region': region,
-                    'country': country,
-                    'country_code': country_code,
-                    'display_name': data.get('display_name', f'{city}, {region}'),
-                    'source': 'nominatim'
-                }
-        except Exception as e:
-            print(f"WARNING: Nominatim failed: {e}")
-        
-        # Method 3: Try geocode.xyz (free API)
-        try:
-            url = "https://geocode.xyz/{},{}".format(lat, lon)
-            params = {'json': 1}
-            
-            response = requests.get(url, params=params, timeout=5)
-            if response.status_code == 200:
-                data = response.json()
-                if 'city' in data:
-                    city = data.get('city', 'Unknown')
-                    region = data.get('state', 'Unknown')
-                    country = data.get('country', 'Unknown')
-                    
-                    print(f"Geocode.xyz: {city}, {region}, {country}")
-                    
-                    return {
-                        'latitude': float(lat),
-                        'longitude': float(lon),
-                        'city': city,
-                        'region': region,
-                        'country': country,
-                        'country_code': 'IN',  # Assume India for this project
-                        'display_name': f"{city}, {region}, {country}",
-                        'source': 'geocode.xyz'
-                    }
-        except Exception as e:
-            print(f"WARNING: Geocode.xyz failed: {e}")
-        
-        # Fallback: Return coordinates only
-        print(f"WARNING: All geocoding services failed, returning coordinates only")
+        # --- Final Fallback: Return coordinates only ---
+        print(f"WARNING: All geocoding services failed. Returning coordinates only.")
         return {
             'latitude': float(lat),
             'longitude': float(lon),
             'city': f'Location ({round(lat, 2)}, {round(lon, 2)})',
-            'region': 'Unknown',
+            'village': '',
+            'town': '',
+            'district': 'Unknown',
+            'state': 'Unknown',
             'country': 'Unknown',
             'country_code': 'UN',
             'display_name': f'{lat}, {lon}',
