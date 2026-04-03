@@ -52,8 +52,9 @@ python app.py
 - Integration with OpenWeatherMap API for live weather data
 - 7-day weather forecasting with hourly details
 - Weather parameters: temperature, rainfall, humidity, wind speed, UV index
-- Automatic location detection via IP geolocation
-- Manual location input support (city name or coordinates)
+- Browser GPS-based location detection with manual city fallback
+- OpenStreetMap Nominatim reverse geocoding for village/town-level names
+- Manual city selection support for laptops and low-accuracy devices
 
 ### 3. **Intelligent Crop Recommendation**
 - Soil type-specific crop suggestions (primary and secondary crops)
@@ -183,7 +184,7 @@ python app.py
 
 ### External APIs
 - **OpenWeatherMap API**: Real-time weather data
-- **IP Geolocation APIs**: Automatic location detection
+- **OpenStreetMap Nominatim**: Reverse geocoding for GPS coordinates
 
 ---
 
@@ -196,7 +197,7 @@ Intelligent-Soil-and-Climate-Aware-Farming-System/
 ├── hybrid_model.py             # Hybrid CNN+LSTM model implementation
 ├── weather_service.py          # Real-time weather API integration
 ├── yield_predictor.py          # LSTM-based yield prediction
-├── geolocation_service.py      # IP-based location detection
+├── geolocation_service.py      # GPS reverse geocoding and location utilities
 ├── planting_calendar.py        # Seasonal planting recommendations
 ├── soil_health_monitor.py      # Soil health analysis & fertilizer suggestions
 │
@@ -235,14 +236,14 @@ Intelligent-Soil-and-Climate-Aware-Farming-System/
 - **pip**: Latest version
 - **Virtual environment**: Recommended to avoid dependency conflicts
 - **Git**: For cloning the repository
-- **Internet connection**: Required for weather API and initial model download
+- **Internet connection**: Required for weather API and reverse geocoding requests
 
 ### Setup Instructions
 
 1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/yourusername/Intelligent-Soil-and-Climate-Aware-Farming-System.git
-   cd Intelligent-Soil-and-Climate-Aware-Farming-System
+  ```bash
+  git clone https://github.com/Winston-watt-page/Intelligent-Soil-and-Climate-Aware-Farming-System.git
+  cd Intelligent-Soil-and-Climate-Aware-Farming-System
    ```
 
 2. **Create a Virtual Environment** (Recommended)
@@ -317,7 +318,7 @@ Intelligent-Soil-and-Climate-Aware-Farming-System/
 
 3. **Using the System**
    - **Upload Soil Image**: Select a clear image of the soil
-   - **Location**: Auto-detected or manually entered
+  - **Location**: Use GPS when available, otherwise select a city manually
    - **Optional Temporal Features**: Provide soil parameters (moisture, pH, NPK) for hybrid prediction
    - **View Results**: Get soil classification, crop recommendations, yield estimates, and planting calendar
 
@@ -336,7 +337,7 @@ Content-Type: multipart/form-data
 
 Parameters:
 - image: Soil image file (required)
-- city: City name (optional, auto-detected if not provided)
+- city: City name (optional, if GPS is unavailable)
 - moisture, pH, nitrogen, phosphorus, potassium, organic_matter (optional)
 ```
 
@@ -350,7 +351,7 @@ GET /api/weekly-forecast?lat=13.0827&lon=80.2707
 ```http
 GET /api/get-location
 ```
-Auto-detects user location based on IP address.
+Returns an explicit error because IP-based auto-detection is disabled. The UI uses browser GPS or manual city selection instead.
 
 #### 5. Reverse Geocoding
 ```http
@@ -362,6 +363,7 @@ Content-Type: application/json
   "lon": 80.2707
 }
 ```
+Reverse geocodes GPS coordinates using OpenStreetMap Nominatim and returns village/town-level place names when available.
 
 #### 6. Yield Prediction
 ```http
@@ -443,7 +445,9 @@ Content-Type: application/json
 The system uses **OpenWeatherMap API** for real-time weather data.
 
 ### Default API Key
-A demo API key is included for testing purposes. For production use:
+The project includes a built-in development key for testing. If the weather API is unavailable, the app falls back to city-specific demo weather profiles so the UI still works.
+
+For production use:
 
 1. Sign up at [OpenWeatherMap](https://openweathermap.org/api)
 2. Generate your API key
@@ -516,9 +520,9 @@ The repository includes pre-trained model files:
 If model files are missing, you can train them using the scripts in the `utils/` directory.
 
 ### API Keys
-The project includes a demo OpenWeatherMap API key for testing. For production use:
+The project includes a built-in OpenWeatherMap key for development/testing. If you want to use your own key or deploy to production, you can:
 1. Get your free API key at [OpenWeatherMap](https://openweathermap.org/api)
-2. Replace the API key in [weather_service.py](weather_service.py#L18)
+2. Replace the key in [weather_service.py](weather_service.py#L18)
 
 ### Static Files
 User-uploaded images are stored in `static/user uploaded/`. Ensure this directory exists and has write permissions.
@@ -563,7 +567,8 @@ app.run(debug=True, port=5001)
 
 ### Current Limitations
 - Requires clear, well-lit soil images
-- Weather API dependency (offline mode has limited features)
+- Weather API dependency, with city-specific demo fallback when offline
+- Laptop browsers often provide low-accuracy location data; manual city selection is more reliable
 - Yield prediction based on historical averages
 
 ### Future Enhancements
@@ -598,6 +603,7 @@ This project is developed for educational and research purposes. Please cite app
 ## Acknowledgments
 
 - **OpenWeatherMap** for weather API
+- **OpenStreetMap contributors** for Nominatim reverse geocoding data
 - **TensorFlow/Keras** community for deep learning frameworks
 - Agricultural research institutions for crop data
 - **OpenCV** for computer vision tools
