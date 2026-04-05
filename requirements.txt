@@ -14,7 +14,7 @@ MarkupSafe==3.0.2
 
 # Deep Learning & Machine Learning (TensorFlow for CNN+LSTM)
 tensorflow==2.20.0
-keras==3.7.0
+keras>=3.10.0
 numpy>=2.1.0
 h5py==3.12.1
 scikit-learn==1.6.1
